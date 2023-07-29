@@ -1,18 +1,21 @@
 import React, {ChangeEvent, useState} from 'react';
 import styles from './SearchBar.module.scss'
+import {useAppDispatch} from "../../store/store";
+import {getUsersByName} from "../Users/usersReducer";
 
 export const SearchBar = () => {
 
-  const [login, setLogin] = useState('')
+  const dispatch = useAppDispatch()
+  const [name, setName] = useState('')
   const [sort, setSort] = useState('rel')
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLogin(e.currentTarget.value)
+    setName(e.currentTarget.value)
   }
 
   const handleSearchUser = () => {
-    if (login) {
-      //getUsers
+    if (name) {
+      dispatch(getUsersByName({name}))
     }
   }
 
@@ -25,11 +28,11 @@ export const SearchBar = () => {
       <div className={styles.search}>
         <input
           type="text"
-          value={login}
+          value={name}
           onChange={handleChange}
         />
         <button
-          disabled={!login}
+          disabled={!name}
           onClick={handleSearchUser}
         >
           search
