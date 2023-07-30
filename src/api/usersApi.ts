@@ -1,13 +1,14 @@
 import axios from "axios";
 
+// api.github.com/search/users?q=Aleks+sort:repositories-asc&page=2&per_page=20
 
 const axiosInstance = axios.create({
   baseURL: 'https://api.github.com/'
 })
 
 export const usersApi = {
-  getUserByName(name: string){
-    return axiosInstance.get<UsersListType>(`search/users?q=${name}`)
+  getUserByName(name: string, page: number = 1, pageSize: number = 30){
+    return axiosInstance.get<UsersListType>(`search/users?q=${name}&page=${page}&per_page=${pageSize}`)
       .then(data => data.data)
   },
   getUsersByNameDescSortByRepo<UsersListType>(name: string){
