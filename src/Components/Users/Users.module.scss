@@ -1,0 +1,10 @@
+.wrapper {
+  width: 90%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+
+  .listItem {
+    margin-bottom: 20px;
+  }
+}
