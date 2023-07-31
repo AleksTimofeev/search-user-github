@@ -1,0 +1,89 @@
+.wrapper {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 5px 5px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "avatar login"
+    "avatar showMore";
+  background: #ededed;
+
+  .avatar { grid-area: avatar; }
+
+  .login { grid-area: login; }
+
+  .showMore { grid-area: showMore; }
+}
+
+
+.avatar { grid-area: avatar; }
+
+.login {
+  grid-area: login;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.showMore {
+  grid-area: showMore;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+.userInfo {
+  position: fixed;
+  top: 100px;
+  left: calc(50% - 250px);
+  width: 500px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+
+  background: #dadaef;
+
+  box-shadow: 0 0 5px 0 #949494;
+
+  z-index: 10;
+
+  button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 0 5px -1px black;
+    cursor: pointer;
+
+    background: #ff0000;
+  }
+  .header {
+    display: flex;
+    margin-bottom: 20px;
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      margin-left: 24px;
+
+
+      h3 {
+        font-size: 24px;
+      }
+    }
+  }
+}
