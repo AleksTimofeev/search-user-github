@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import styles from './SearchBar.module.scss'
 import {useAppDispatch} from "../../store/store";
 import {getUsersByName} from "../Users/usersReducer";
@@ -12,10 +12,17 @@ export const SearchBar = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value)
   }
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.code === 'Enter'){
+      handleSearchUser()
+    }
+  }
 
   const handleSearchUser = () => {
     if (name) {
-      dispatch(getUsersByName({name}))
+      // if(sort === 'desc')dispatch(getUsesByNameSortDesc({name}))
+      // if(sort === 'asc')dispatch(getUsesByNameSortDesc({name}))
+      if(sort === 'rel')dispatch(getUsersByName({name}))
     }
   }
 
@@ -23,13 +30,19 @@ export const SearchBar = () => {
     setSort(e.currentTarget.value)
   }
 
+  useEffect(() => {
+
+  },[])
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.search}>
         <input
           type="text"
+          placeholder='Введите имя пользователя.'
           value={name}
           onChange={handleChange}
+          onKeyDown={handleEnter}
         />
         <button
           disabled={!name}
