@@ -54,13 +54,13 @@ const slice = createSlice({
 
 export const usersReducer = slice.reducer
 
-type UsersReducerInitialStateType = {
+export type UsersReducerInitialStateType = {
   users: {
     incomplete_results: boolean
     items: ResponseUserType[]
     total_count: number
   }
-  userInfo: UserInfoType
+  userInfo: UserInfoType | null
   usersStatus: 'idle' | 'loading' | 'failed'
   userInfoStatus: 'idle' | 'loading' | 'failed'
 }
