@@ -29,8 +29,8 @@ export const SearchBar = () => {
   }
 
   useEffect(() => {
-
-  },[])
+    handleSearchUser()
+  },[sort])
 
   return (
     <div className={styles.wrapper}>
@@ -50,9 +50,9 @@ export const SearchBar = () => {
         </button>
       </div>
       <div className={styles.sort}>
-        <span>Сортировать по:</span>
+        <span>sort:</span>
         <label htmlFor="rel">
-          релевантности
+          relevant
           <input
             type="radio"
             id='rel'
@@ -63,7 +63,7 @@ export const SearchBar = () => {
           />
         </label>
         <label htmlFor="asc">
-          количеству репозиториев &#8593;
+          ascending count repo &#8593;
           <input
             type="radio"
             id='asc'
@@ -74,7 +74,7 @@ export const SearchBar = () => {
           />
         </label>
         <label htmlFor="desc">
-          количеству репозиториев &#8595;
+          descending count repo &#8595;
           <input
             type="radio"
             id='desc'
