@@ -1,13 +1,17 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import styles from './SearchBar.module.scss'
-import {useAppDispatch} from "../../store/store";
+import {useAppDispatch, useAppSelector} from "../../store/store";
 import {getUsersByName} from "../Users/usersReducer";
+import {Pagination} from "../Pagination/Pagination";
 
 export const SearchBar = () => {
 
   const dispatch = useAppDispatch()
+  const usersCount = useAppSelector(state => state.users.users.total_count)
   const [name, setName] = useState('')
   const [sort, setSort] = useState('rel')
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(20)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value)
@@ -20,7 +24,7 @@ export const SearchBar = () => {
 
   const handleSearchUser = () => {
     if (name) {
-      dispatch(getUsersByName({name, sort}))
+      dispatch(getUsersByName({name, sort, page, pageSize}))
     }
   }
 
@@ -28,9 +32,16 @@ export const SearchBar = () => {
     setSort(e.currentTarget.value)
   }
 
+  const handleChangePage = (page: number) => {
+    setPage(page)
+  }
+  const handleChangePageSize = (pageSize: number) => {
+    setPageSize(pageSize)
+  }
+
   useEffect(() => {
     handleSearchUser()
-  },[sort])
+  },[sort, page, pageSize])
 
   return (
     <div className={styles.wrapper}>
@@ -85,6 +96,11 @@ export const SearchBar = () => {
           />
         </label>
       </div>
+      <Pagination
+        totalUsersCount={usersCount ? usersCount : 1}
+        changeCurrentPage={handleChangePage}
+        changePageSize={handleChangePageSize}
+      />
     </div>
   );
 }

@@ -2,11 +2,13 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {usersApi, ResponseUserType, ResponseUserInfoType} from "../../api/usersApi";
 
 export const getUsersByName = createAsyncThunk(
-  'users/getUsers', async (arg: { name: string, sort: string }) => {
+  'users/getUsers',
+  async (arg: { name: string, sort: string, page?: number, pageSize?: number }
+  ) => {
     try {
-      if(arg.sort === 'rel') return await usersApi.getUserByName(arg.name)
-      if(arg.sort === 'asc') return await usersApi.getUsersByNameAscSortByRepo(arg.name)
-      if(arg.sort === 'desc') return await usersApi.getUsersByNameDescSortByRepo(arg.name)
+      if(arg.sort === 'rel') return await usersApi.getUserByName(arg.name, arg.page, arg.pageSize)
+      if(arg.sort === 'asc') return await usersApi.getUsersByNameAscSortByRepo(arg.name, arg.page, arg.pageSize)
+      if(arg.sort === 'desc') return await usersApi.getUsersByNameDescSortByRepo(arg.name, arg.page, arg.pageSize)
 
     } catch (e) {
 

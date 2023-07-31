@@ -7,15 +7,12 @@ export const Users = () => {
 
   const users = useAppSelector(state => state.users.users)
 
-
-
   return (
     <div className={styles.wrapper}>
       {users.items?.map(u => (
         <div key={u.id} className={styles.listItem}>
           <User {...u} />
         </div>
-
       ))}
     </div>
   );
