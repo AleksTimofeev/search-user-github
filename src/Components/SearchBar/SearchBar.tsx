@@ -20,9 +20,7 @@ export const SearchBar = () => {
 
   const handleSearchUser = () => {
     if (name) {
-      // if(sort === 'desc')dispatch(getUsesByNameSortDesc({name}))
-      // if(sort === 'asc')dispatch(getUsesByNameSortDesc({name}))
-      if(sort === 'rel')dispatch(getUsersByName({name}))
+      dispatch(getUsersByName({name, sort}))
     }
   }
 

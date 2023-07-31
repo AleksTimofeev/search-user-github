@@ -5,7 +5,9 @@ import {User} from "./User/User";
 
 export const Users = () => {
 
-  const {users, usersStatus} = useAppSelector(state => state.users)
+  const users = useAppSelector(state => state.users.users)
+
+
 
   return (
     <div className={styles.wrapper}>

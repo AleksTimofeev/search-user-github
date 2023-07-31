@@ -1,7 +1,5 @@
 import axios from "axios";
 
-// api.github.com/search/users?q=Aleks+sort:repositories-asc&page=2&per_page=20
-
 const axiosInstance = axios.create({
   baseURL: 'https://api.github.com/'
 })
@@ -15,13 +13,13 @@ export const usersApi = {
     return axios.get<ResponseUserInfoType>(url)
       .then(data => data.data)
   },
-  getUsersByNameDescSortByRepo<UsersListType>(name: string){
-    return axiosInstance.get(`search/users?q=${name}+sort:repositories-desc`)
-      .then(data => console.log(data.data))
+  getUsersByNameDescSortByRepo(name: string, page: number = 1, pageSize: number = 30){
+    return axiosInstance.get<UsersListType>(`search/users?q=${name}+sort:repositories-desc&page=${page}&per_page=${pageSize}`)
+      .then(data => data.data)
   },
-  getUsersByNameAscSortByRepo<UsersListType>(name: string){
-    return axiosInstance.get(`search/users?q=${name}+sort:repositories-asc`)
-      .then(data => console.log(data.data))
+  getUsersByNameAscSortByRepo(name: string, page: number = 1, pageSize: number = 30){
+    return axiosInstance.get<UsersListType>(`search/users?q=${name}+sort:repositories-asc&page=${page}&per_page=${pageSize}`)
+      .then(data => data.data)
   },
 }
 
