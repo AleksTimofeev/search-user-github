@@ -48,7 +48,7 @@ export const SearchBar = () => {
       <div className={styles.search}>
         <input
           type="text"
-          placeholder='Введите имя пользователя.'
+          placeholder="Login..."
           value={name}
           onChange={handleChange}
           onKeyDown={handleEnter}
