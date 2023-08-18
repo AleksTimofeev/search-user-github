@@ -5,6 +5,7 @@ let initialState = {
   usersStatus: 'idle',
   userInfoStatus: 'idle',
   userInfo: null,
+  getDataError: null
 } as UsersReducerInitialStateType
 
 beforeEach(() => {
@@ -16,7 +17,8 @@ beforeEach(() => {
     },
     userInfo: null,
     usersStatus: 'idle',
-    userInfoStatus: 'idle'
+    userInfoStatus: 'idle',
+    getDataError: null
   }
 })
 
