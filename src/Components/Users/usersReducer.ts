@@ -17,8 +17,9 @@ export const getUsersByName = createAsyncThunk<
         return thunkAPI.rejectWithValue({message: 'user not found...'})
       }
     } catch (e) {
+      console.log(e)
       if(isAxiosError(e)){
-        return thunkAPI.rejectWithValue({message: e.response?.data?.message || 'something wrong...'})
+        return thunkAPI.rejectWithValue({message: e.response?.data?.message || e.message})
       }else{
         return thunkAPI.rejectWithValue({message: 'network error!!!'})
       }
@@ -32,7 +33,7 @@ export const getUserInfo = createAsyncThunk<ResponseUserInfoType, {url: string},
       return await usersApi.getUserInfo(arg.url)
     } catch (e) {
       if(isAxiosError(e)){
-        return thunkAPI.rejectWithValue({message: e.response?.data?.message || 'something wrong...'})
+        return thunkAPI.rejectWithValue({message: e.response?.data?.message || e.message})
       }else{
         return thunkAPI.rejectWithValue({message: 'network error!!!'})
       }
@@ -48,7 +49,11 @@ const slice = createSlice({
     userInfoStatus: 'idle',
     getDataError: null
   } as UsersReducerInitialStateType,
-  reducers: {},
+  reducers: {
+    clearNotification: (state) => {
+      state.getDataError = null
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getUsersByName.pending, (state) => {
       state.usersStatus = 'loading'
@@ -78,6 +83,7 @@ const slice = createSlice({
   }
 })
 
+export const {clearNotification} = slice.actions
 export const usersReducer = slice.reducer
 
 export type UsersReducerInitialStateType = {
