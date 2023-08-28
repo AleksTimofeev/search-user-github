@@ -1,9 +1,10 @@
 import {getUserInfo, getUsersByName, usersReducer, UsersReducerInitialStateType} from "./usersReducer";
+import {RequestStatus} from "../../constants/requestStatus";
 
 let initialState = {
   users: {},
-  usersStatus: 'idle',
-  userInfoStatus: 'idle',
+  usersStatus: RequestStatus.IDLE,
+  userInfoStatus: RequestStatus.IDLE,
   userInfo: null,
   getDataError: null
 } as UsersReducerInitialStateType
@@ -16,8 +17,8 @@ beforeEach(() => {
       total_count: 0
     },
     userInfo: null,
-    usersStatus: 'idle',
-    userInfoStatus: 'idle',
+    usersStatus: RequestStatus.IDLE,
+    userInfoStatus: RequestStatus.IDLE,
     getDataError: null
   }
 })
@@ -65,20 +66,20 @@ const userInfoResp = {
 test('get users by name', () => {
   const actionPending = getUsersByName.pending
   const newStatePending = usersReducer(initialState, actionPending)
-  expect(newStatePending.usersStatus).toBe('loading')
+  expect(newStatePending.usersStatus).toBe(RequestStatus.LOADING)
 
   const action = getUsersByName.fulfilled(usersResp, '', {name: 'aleks', sort: 'rel'})
   const newState = usersReducer(initialState, action)
   expect(newState.users).toEqual(usersResp)
-  expect(newState.usersStatus).toBe('idle')
+  expect(newState.usersStatus).toBe(RequestStatus.IDLE)
 })
 test('get user info', () => {
   const actionPending = getUserInfo.pending
   const newStatePending = usersReducer(initialState, actionPending)
-  expect(newStatePending.userInfoStatus).toBe('loading')
+  expect(newStatePending.userInfoStatus).toBe(RequestStatus.LOADING)
 
   const action = getUserInfo.fulfilled(userInfoResp, '', {url: 'url'})
   const newState = usersReducer(initialState, action)
   expect(newState.userInfo).toEqual(userInfoResp)
-  expect(newState.userInfoStatus).toBe('idle')
+  expect(newState.userInfoStatus).toBe(RequestStatus.IDLE)
 })

@@ -1,40 +1,51 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {usersApi, ResponseUserType, ResponseUserInfoType, UsersListType} from "../../api/usersApi";
 import {isAxiosError} from "axios";
+import {RequestStatusType} from "../../types/stateTypes";
+import {changeGetUserInfoStatus, changeGetUsersStatus} from "../App/appReducer";
+import {RequestStatus} from "../../constants/requestStatus";
 
 export const getUsersByName = createAsyncThunk<
-  UsersListType, {name: string, sort: string, page?: number, pageSize?: number }, {rejectValue: {message: string}}
+  UsersListType,
+  { name: string, sort: string, page?: number, pageSize?: number },
+  { rejectValue: { message: string } }
   >('users/getUsers', async (arg, thunkAPI) => {
+    thunkAPI.dispatch(changeGetUsersStatus(RequestStatus.LOADING))
     try {
       let users
-      if(arg.sort === 'rel') users = await usersApi.getUserByName(arg.name, arg.page, arg.pageSize)
-      if(arg.sort === 'asc') users = await usersApi.getUsersByNameAscSortByRepo(arg.name, arg.page, arg.pageSize)
+      if (arg.sort === 'rel') users = await usersApi.getUserByName(arg.name, arg.page, arg.pageSize)
+      if (arg.sort === 'asc') users = await usersApi.getUsersByNameAscSortByRepo(arg.name, arg.page, arg.pageSize)
       else users = await usersApi.getUsersByNameDescSortByRepo(arg.name, arg.page, arg.pageSize)
-      if(users.total_count > 0){
+      if (users.total_count > 0) {
+        thunkAPI.dispatch(changeGetUsersStatus(RequestStatus.SUCCEEDED))
         return users
-      }
-      else {
+      } else {
+        thunkAPI.dispatch(changeGetUsersStatus(RequestStatus.FAILED))
         return thunkAPI.rejectWithValue({message: 'user not found...'})
       }
     } catch (e) {
-      console.log(e)
-      if(isAxiosError(e)){
+      thunkAPI.dispatch(changeGetUsersStatus(RequestStatus.FAILED))
+      if (isAxiosError(e)) {
         return thunkAPI.rejectWithValue({message: e.response?.data?.message || e.message})
-      }else{
+      } else {
         return thunkAPI.rejectWithValue({message: 'network error!!!'})
       }
     }
   }
 )
 
-export const getUserInfo = createAsyncThunk<ResponseUserInfoType, {url: string}, {rejectValue: {message: string}}>(
+export const getUserInfo = createAsyncThunk<ResponseUserInfoType, { url: string }, { rejectValue: { message: string } }>(
   'users/getUserInfo', async (arg, thunkAPI) => {
+    thunkAPI.dispatch(changeGetUserInfoStatus(RequestStatus.LOADING))
     try {
-      return await usersApi.getUserInfo(arg.url)
+      const userInfo = await usersApi.getUserInfo(arg.url)
+      thunkAPI.dispatch(changeGetUserInfoStatus(RequestStatus.SUCCEEDED))
+      return userInfo
     } catch (e) {
-      if(isAxiosError(e)){
+      thunkAPI.dispatch(changeGetUserInfoStatus(RequestStatus.FAILED))
+      if (isAxiosError(e)) {
         return thunkAPI.rejectWithValue({message: e.response?.data?.message || e.message})
-      }else{
+      } else {
         return thunkAPI.rejectWithValue({message: 'network error!!!'})
       }
     }
@@ -45,8 +56,8 @@ const slice = createSlice({
   name: 'users',
   initialState: {
     users: {},
-    usersStatus: 'idle',
-    userInfoStatus: 'idle',
+    usersStatus: RequestStatus.IDLE,
+    userInfoStatus: RequestStatus.IDLE,
     getDataError: null
   } as UsersReducerInitialStateType,
   reducers: {
@@ -56,28 +67,28 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getUsersByName.pending, (state) => {
-      state.usersStatus = 'loading'
+      state.usersStatus = RequestStatus.LOADING
     })
     builder.addCase(getUsersByName.fulfilled, (state, action) => {
       if (action.payload) {
         state.users = action.payload
       }
-      state.usersStatus = 'idle'
+      state.usersStatus = RequestStatus.IDLE
     })
     builder.addCase(getUsersByName.rejected, (state, action) => {
-      if (action.payload?.message){
+      if (action.payload?.message) {
         state.getDataError = action.payload.message
       }
     })
     builder.addCase(getUserInfo.pending, (state, action) => {
-      state.userInfoStatus = 'loading'
+      state.userInfoStatus = RequestStatus.LOADING
     })
     builder.addCase(getUserInfo.fulfilled, (state, action) => {
       if (action.payload) state.userInfo = action.payload
-      state.userInfoStatus = 'idle'
+      state.userInfoStatus = RequestStatus.IDLE
     })
     builder.addCase(getUserInfo.rejected, (state, action) => {
-      if(action.payload?.message)
+      if (action.payload?.message)
         state.getDataError = action.payload.message
     })
   }
@@ -93,8 +104,8 @@ export type UsersReducerInitialStateType = {
     total_count: number
   }
   userInfo: UserInfoType | null
-  usersStatus: 'idle' | 'loading' | 'failed'
-  userInfoStatus: 'idle' | 'loading' | 'failed'
+  usersStatus: RequestStatusType
+  userInfoStatus: RequestStatusType
   getDataError: null | string
 }
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './App.module.scss'
-import {SearchBar} from "./Components/SearchBar/SearchBar";
-import {Users} from "./Components/Users/Users";
-import {Notification} from "./Components/Notification/Notification";
-import {useAppSelector} from "./store/store";
+import {SearchBar} from "../SearchBar/SearchBar";
+import {Users} from "../Users/Users";
+import {Notification} from "../Notification/Notification";
+import {useAppSelector} from "../../store/store";
 
 
 function App() {

@@ -3,11 +3,13 @@ import styles from './SearchBar.module.scss'
 import {useAppDispatch, useAppSelector} from "../../store/store";
 import {getUsersByName} from "../Users/usersReducer";
 import {Pagination} from "../Pagination/Pagination";
+import {RequestStatus} from "../../constants/requestStatus";
 
 export const SearchBar = () => {
 
   const dispatch = useAppDispatch()
   const usersCount = useAppSelector(state => state.users.users.total_count)
+  const getUsersStatus = useAppSelector(state => state.users.usersStatus)
   const [name, setName] = useState('')
   const [sort, setSort] = useState('rel')
   const [page, setPage] = useState(1)
@@ -54,7 +56,7 @@ export const SearchBar = () => {
           onKeyDown={handleEnter}
         />
         <button
-          disabled={!name}
+          disabled={!name || getUsersStatus === RequestStatus.LOADING}
           onClick={handleSearchUser}
         >
           search
