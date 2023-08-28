@@ -2,29 +2,29 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {usersApi, ResponseUserType, ResponseUserInfoType, UsersListType} from "../../api/usersApi";
 import {isAxiosError} from "axios";
 import {RequestStatusType} from "../../types/stateTypes";
-import {changeGetUserInfoStatus, changeGetUsersStatus} from "../App/appReducer";
 import {RequestStatus} from "../../constants/requestStatus";
+import {changeAppStatus} from "../App/appReducer";
 
 export const getUsersByName = createAsyncThunk<
   UsersListType,
   { name: string, sort: string, page?: number, pageSize?: number },
   { rejectValue: { message: string } }
   >('users/getUsers', async (arg, thunkAPI) => {
-    thunkAPI.dispatch(changeGetUsersStatus(RequestStatus.LOADING))
+    thunkAPI.dispatch(changeAppStatus(RequestStatus.LOADING))
     try {
       let users
       if (arg.sort === 'rel') users = await usersApi.getUserByName(arg.name, arg.page, arg.pageSize)
       if (arg.sort === 'asc') users = await usersApi.getUsersByNameAscSortByRepo(arg.name, arg.page, arg.pageSize)
       else users = await usersApi.getUsersByNameDescSortByRepo(arg.name, arg.page, arg.pageSize)
       if (users.total_count > 0) {
-        thunkAPI.dispatch(changeGetUsersStatus(RequestStatus.SUCCEEDED))
+        thunkAPI.dispatch(changeAppStatus(RequestStatus.SUCCEEDED))
         return users
       } else {
-        thunkAPI.dispatch(changeGetUsersStatus(RequestStatus.FAILED))
+        thunkAPI.dispatch(changeAppStatus(RequestStatus.FAILED))
         return thunkAPI.rejectWithValue({message: 'user not found...'})
       }
     } catch (e) {
-      thunkAPI.dispatch(changeGetUsersStatus(RequestStatus.FAILED))
+      thunkAPI.dispatch(changeAppStatus(RequestStatus.FAILED))
       if (isAxiosError(e)) {
         return thunkAPI.rejectWithValue({message: e.response?.data?.message || e.message})
       } else {
@@ -36,13 +36,13 @@ export const getUsersByName = createAsyncThunk<
 
 export const getUserInfo = createAsyncThunk<ResponseUserInfoType, { url: string }, { rejectValue: { message: string } }>(
   'users/getUserInfo', async (arg, thunkAPI) => {
-    thunkAPI.dispatch(changeGetUserInfoStatus(RequestStatus.LOADING))
+    thunkAPI.dispatch(changeAppStatus(RequestStatus.LOADING))
     try {
       const userInfo = await usersApi.getUserInfo(arg.url)
-      thunkAPI.dispatch(changeGetUserInfoStatus(RequestStatus.SUCCEEDED))
+      thunkAPI.dispatch(changeAppStatus(RequestStatus.SUCCEEDED))
       return userInfo
     } catch (e) {
-      thunkAPI.dispatch(changeGetUserInfoStatus(RequestStatus.FAILED))
+      thunkAPI.dispatch(changeAppStatus(RequestStatus.FAILED))
       if (isAxiosError(e)) {
         return thunkAPI.rejectWithValue({message: e.response?.data?.message || e.message})
       } else {
