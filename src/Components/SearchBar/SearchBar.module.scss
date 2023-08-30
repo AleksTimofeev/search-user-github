@@ -44,6 +44,11 @@
         background: #c2c2fa;
         cursor: not-allowed;
       }
+      &:disabled:active {
+        background: #c2c2fa;
+        box-shadow: none;
+        transform: none;
+      }
     }
   }
   .sort {
