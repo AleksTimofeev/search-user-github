@@ -2,7 +2,14 @@
   position: absolute;
   bottom: 50px;
   left: 50px;
-  padding: 6px 12px;
+  padding: 12px 24px;
+  border-radius: 6px;
+  box-shadow: 0 0 6px 0 gray;
+
+
+  span {
+    font-size: 20px;
+  }
 }
 .success {
   background: #18ff00;

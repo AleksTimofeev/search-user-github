@@ -79,6 +79,7 @@ const slice = createSlice({
       if (action.payload?.message) {
         state.getDataError = action.payload.message
       }
+      state.usersStatus = RequestStatus.IDLE
     })
     builder.addCase(getUserInfo.pending, (state, action) => {
       state.userInfoStatus = RequestStatus.LOADING
