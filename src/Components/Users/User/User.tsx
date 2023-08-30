@@ -1,24 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import styles from './User.module.scss'
 import {ResponseUserType} from "../../../api/usersApi";
-import {UserInfo} from "./UserInfo";
 import {useAppSelector} from "../../../store/store";
 import {RequestStatus} from "../../../constants/requestStatus";
 
-type PropsType = ResponseUserType
+type PropsType = {
+  getMoreInfo: (url: string) => void
+} & ResponseUserType
 
 export const User: React.FC<PropsType> = ({
-                                            id, avatar_url, html_url, login, url
+                                            id, avatar_url, html_url, login, url, getMoreInfo
                                           }) => {
 
   const getUserInfoStatus = useAppSelector(state => state.users.userInfoStatus)
-  const [showInfo, setShowInfo] = useState(false)
 
   const handleShowMoreInformation = () => {
-    setShowInfo(true)
-  }
-  const handleCloseMoreInformation = () => {
-    setShowInfo(false)
+    getMoreInfo(url)
   }
 
   return (
@@ -34,7 +31,6 @@ export const User: React.FC<PropsType> = ({
         >show more information
         </button>
       </div>
-      {showInfo && <UserInfo closeInfo={handleCloseMoreInformation} url={url}/>}
     </div>
   );
 }

@@ -26,7 +26,6 @@ export const UserInfo: React.FC<PropsType> = ({closeInfo, url}) => {
     <div className={styles.userInfo}>
       <button onClick={handleClose}>X</button>
       {userInfoStatus === 'idle' && userInfo && <>
-        {/*<button onClick={handleClose}>X</button>*/}
         <div className={styles.header}>
           <img src={userInfo.avatar_url} width='100' alt="img"/>
           <div className={styles.title}>
