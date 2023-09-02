@@ -53,35 +53,36 @@
       }
     }
   }
-  .sort {
+}
+
+.sort {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .checkboxContainer {
     display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+    flex-direction: row-reverse;
 
-    .checkboxContainer {
-      display: flex;
-      flex-direction: row-reverse;
-
-      input[type='radio'] {
-        display: none;
-      }
-      span {
-        margin: 6px;
-      }
-      label {
-        margin: 6px;
-        padding: 6px 12px;
-        cursor: pointer;
-        border: 2px solid transparent;
-        border-radius: 5px;
-        user-select: none;
-      }
-      input[type='radio']:checked ~ label {
-        border: 2px solid #9a9adb;
-      }
+    input[type='radio'] {
+      display: none;
     }
-
+    span {
+      margin: 6px;
+    }
+    label {
+      margin: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 5px;
+      user-select: none;
+    }
+    input[type='radio']:checked ~ label {
+      border: 2px solid #9a9adb;
+    }
   }
+
 }
 
 @media screen and (max-width: 450px){

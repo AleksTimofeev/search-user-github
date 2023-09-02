@@ -1,5 +1,5 @@
 .wrapper {
-  width: 90%;
+  width: 95%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -7,16 +7,24 @@
   margin-bottom: 20px;
 
   .listItem {
-    width: 100%;
-    max-width: 400px;
+    width: 30%;
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 1200px) {
   .wrapper {
 
     .listItem {
-      width: calc(50% - 20px);
+      width: 48%;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+
+    .listItem {
+      width: 100%;
     }
   }
 }

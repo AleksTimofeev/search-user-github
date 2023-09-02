@@ -4,6 +4,7 @@ import {useAppDispatch, useAppSelector} from "../../store/store";
 import {getUsersByName} from "../Users/usersReducer";
 import {Pagination} from "../Pagination/Pagination";
 import {RequestStatus} from "../../constants/requestStatus";
+import {Sort} from "./Sort";
 
 export const SearchBar = () => {
 
@@ -62,42 +63,7 @@ export const SearchBar = () => {
           search
         </button>
       </div>
-      <div className={styles.sort}>
-        <div className={styles.checkboxContainer}>
-          <input
-            className={styles.checkbox}
-            type="radio"
-            id='rel'
-            value='rel'
-            name='rel'
-            checked={'rel' === sort}
-            onChange={handleChangeSort}
-          />
-          <label htmlFor="rel">relevant</label>
-        </div>
-        <div className={styles.checkboxContainer}>
-          <input
-            type="radio"
-            id='asc'
-            value='asc'
-            name='asc'
-            checked={'asc' === sort}
-            onChange={handleChangeSort}
-          />
-          <label htmlFor="asc">ascending count repo &#8593;</label>
-        </div>
-        <div className={styles.checkboxContainer}>
-          <input
-            type="radio"
-            id='desc'
-            value='desc'
-            name='desc'
-            checked={'desc' === sort}
-            onChange={handleChangeSort}
-          />
-          <label htmlFor="desc">descending count repo &#8595;</label>
-        </div>
-      </div>
+      <Sort sort={sort} changeSort={handleChangeSort}/>
       <Pagination
         totalUsersCount={usersCount ? usersCount : 1}
         changeCurrentPage={handleChangePage}
