@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './Loader.module.scss'
+import styles from './LinearLoader.module.scss'
 
-export const Loader = () => {
+export const LinearLoader = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.linearActivity}>

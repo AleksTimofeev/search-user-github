@@ -4,7 +4,7 @@ import {SearchBar} from "../SearchBar/SearchBar";
 import {Users} from "../Users/Users";
 import {Notification} from "../Notification/Notification";
 import {useAppSelector} from "../../store/store";
-import {Loader} from "../Loader/Loader";
+import {LinearLoader} from "../Loader/LinearLoader";
 import {RequestStatus} from "../../constants/requestStatus";
 
 
@@ -15,7 +15,7 @@ function App() {
 
   return (
     <div className={styles.appWrapper}>
-      {appStatus === RequestStatus.LOADING && <Loader/>}
+      {appStatus === RequestStatus.LOADING && <LinearLoader/>}
       <SearchBar />
       <Users />
       {error && <Notification type={'error'} text={error}/>}

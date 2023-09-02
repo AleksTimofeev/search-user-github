@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './UserPhotoLoader.module.scss'
+import styles from './CircleLoader.module.scss'
 
-export const UserPhotoLoader = () => {
+export const CircleLoader = () => {
   return (
     <div className={styles.wrapper}>
       <span className={styles.loader}></span>

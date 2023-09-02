@@ -4,7 +4,7 @@ import {ResponseUserType} from "../../../api/usersApi";
 import {useAppSelector} from "../../../store/store";
 import {RequestStatus} from "../../../constants/requestStatus";
 import axios from "axios";
-import {UserPhotoLoader} from "../UserPhotoLoader/UserPhotoLoader";
+import {CircleLoader} from "../../Loader/CircleLoader";
 
 type PropsType = {
   getMoreInfo: (url: string) => void
@@ -35,7 +35,7 @@ export const User: React.FC<PropsType> = ({
     <>
         <div className={styles.wrapper}>
           <div className={styles.avatar}>
-            {photoIsLoading ? <img src={avatar_url} width='65' alt="avatar"/> : <UserPhotoLoader/>}
+            {photoIsLoading ? <img src={avatar_url} width='65' alt="avatar"/> : <CircleLoader/>}
           </div>
           <div className={styles.login}><a href={html_url}>{login}</a></div>
           <div className={styles.showMore}>

@@ -2,6 +2,8 @@ import React, {useEffect} from 'react';
 import styles from './User.module.scss'
 import {useAppDispatch, useAppSelector} from "../../../store/store";
 import {getUserInfo} from "../usersReducer";
+import {RequestStatus} from "../../../constants/requestStatus";
+import {CircleLoader} from "../../Loader/CircleLoader";
 
 type PropsType = {
   closeInfo: () => void
@@ -24,20 +26,23 @@ export const UserInfo: React.FC<PropsType> = ({closeInfo, url}) => {
 
   return (
     <div className={styles.userInfo}>
-      <button onClick={handleClose}>X</button>
-      {userInfoStatus === 'idle' && userInfo && <>
-        <div className={styles.header}>
-          <img src={userInfo.avatar_url} width='100' alt="img"/>
-          <div className={styles.title}>
-            <h3>{userInfo.login}</h3>
-            <a href={userInfo.html_url}>github</a>
+      {userInfoStatus === RequestStatus.LOADING ?
+        <div className={styles.loader}><CircleLoader /></div> : <>
+        <button onClick={handleClose}>X</button>
+        {userInfoStatus === 'idle' && userInfo && <>
+          <div className={styles.header}>
+            <img src={userInfo.avatar_url} width='100' alt="img"/>
+            <div className={styles.title}>
+              <h3>{userInfo.login}</h3>
+              <a href={userInfo.html_url}>github</a>
+            </div>
           </div>
-        </div>
-        <span>location - {userInfo.location}</span>
-        <span>email - {userInfo.email}</span>
-        <span>company - {userInfo.company}</span>
-        <span>followers - {userInfo.followers}</span>
-        <span>public repos - {userInfo.public_repos}</span>
+          <span>location - {userInfo.location}</span>
+          <span>email - {userInfo.email}</span>
+          <span>company - {userInfo.company}</span>
+          <span>followers - {userInfo.followers}</span>
+          <span>public repos - {userInfo.public_repos}</span>
+        </>}
       </>}
     </div>
   );
