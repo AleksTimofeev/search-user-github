@@ -31,8 +31,8 @@ export const SearchBar = () => {
     }
   }
 
-  const handleChangeSort = (e: ChangeEvent<HTMLInputElement>) => {
-    setSort(e.currentTarget.value)
+  const handleChangeSort = (value: string) => {
+    setSort(value)
   }
 
   const handleChangePage = (page: number) => {
