@@ -1,11 +1,22 @@
 .wrapper {
   width: 90%;
-  max-width: 800px;
   display: flex;
-  flex-direction: column;
-  margin-top: 150px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
 
   .listItem {
-    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .wrapper {
+
+    .listItem {
+      width: calc(50% - 20px);
+    }
   }
 }

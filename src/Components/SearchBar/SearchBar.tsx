@@ -19,7 +19,7 @@ export const SearchBar = () => {
     setName(e.currentTarget.value)
   }
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if(e.code === 'Enter'){
+    if (e.code === 'Enter') {
       handleSearchUser()
     }
   }
@@ -43,7 +43,7 @@ export const SearchBar = () => {
 
   useEffect(() => {
     handleSearchUser()
-  },[sort, page, pageSize])
+  }, [sort, page, pageSize])
 
   return (
     <div className={styles.wrapper}>
@@ -63,10 +63,9 @@ export const SearchBar = () => {
         </button>
       </div>
       <div className={styles.sort}>
-        <span>sort:</span>
-        <label htmlFor="rel">
-          relevant
+        <div className={styles.checkboxContainer}>
           <input
+            className={styles.checkbox}
             type="radio"
             id='rel'
             value='rel'
@@ -74,9 +73,9 @@ export const SearchBar = () => {
             checked={'rel' === sort}
             onChange={handleChangeSort}
           />
-        </label>
-        <label htmlFor="asc">
-          ascending count repo &#8593;
+          <label htmlFor="rel">relevant</label>
+        </div>
+        <div className={styles.checkboxContainer}>
           <input
             type="radio"
             id='asc'
@@ -85,9 +84,9 @@ export const SearchBar = () => {
             checked={'asc' === sort}
             onChange={handleChangeSort}
           />
-        </label>
-        <label htmlFor="desc">
-          descending count repo &#8595;
+          <label htmlFor="asc">ascending count repo &#8593;</label>
+        </div>
+        <div className={styles.checkboxContainer}>
           <input
             type="radio"
             id='desc'
@@ -96,7 +95,8 @@ export const SearchBar = () => {
             checked={'desc' === sort}
             onChange={handleChangeSort}
           />
-        </label>
+          <label htmlFor="desc">descending count repo &#8595;</label>
+        </div>
       </div>
       <Pagination
         totalUsersCount={usersCount ? usersCount : 1}
