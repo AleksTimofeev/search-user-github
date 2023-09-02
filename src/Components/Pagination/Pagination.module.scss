@@ -57,3 +57,20 @@
     }
   }
 }
+
+@media screen and (max-width: 550px) {
+  .wrapper {
+    gap: 5px;
+
+    .pageNumber {
+      padding: 3px 6px;
+    }
+
+    button {
+      font-size: 14px;
+    }
+    select {
+      padding: 5px 6px;
+    }
+  }
+}
